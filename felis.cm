@@ -1,0 +1,42 @@
+Group is
+    $/basis.cm
+
+    lib/base.sml
+
+    lib/cats/category.sig
+    lib/cats/arrow.sig
+
+    lib/cats/alternative.sig
+    lib/cats/applicative.sig
+    lib/cats/functor.sig
+    lib/cats/monad.sig
+
+    lib/cats/semigroup.sig
+    lib/cats/monoid.sig
+
+    lib/cats/foldable.sig
+    lib/cats/traversable.sig
+
+    lib/impls/function.sml
+    lib/impls/list.sml
+    lib/impls/option.sml
+    lib/impls/unit.sml
+    lib/impls/string.sml
+    lib/impls/int-prod.sml
+    lib/impls/int-sum.sml
+    lib/impls/vector.sml
+    lib/impls/tuplef.sml
+    lib/impls/tuplem.sml
+
+    lib/infix/alternative.sml
+    lib/infix/applicative.sml
+    lib/infix/functor.sml
+    lib/infix/monad.sml
+    lib/infix/monoid.sml
+
+    lib/enrich/alternative.sml
+    lib/enrich/applicative.sml
+    lib/enrich/arrow.sml
+    lib/enrich/category.sml
+    lib/enrich/functor.sml
+    lib/enrich/monad.sml
