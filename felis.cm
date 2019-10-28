@@ -22,8 +22,7 @@ Group is
     lib/impls/option.sml
     lib/impls/unit.sml
     lib/impls/string.sml
-    lib/impls/int-prod.sml
-    lib/impls/int-sum.sml
+    lib/impls/int.sml
     lib/impls/vector.sml
     lib/impls/tuplef.sml
     lib/impls/tuplem.sml
