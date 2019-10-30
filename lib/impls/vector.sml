@@ -1,4 +1,4 @@
-functor VectorInstances(structure V : VECTOR) =
+functor VectorInstances(V : VECTOR) =
 struct
   structure VectorMonoid : MONOID =
   struct
@@ -38,12 +38,12 @@ struct
       structure F = VectorFoldable
       local
         structure S = ApplicativeEnrichments(A)
-        open S A V Base
+        open S Base
         infix 6 <$> <*>
       in
         fun traverse f xs =
           let fun trav x ys = (uncurry op ::) <$> (f x) <*> ys
-          in map fromList (F.foldr trav (pure []) xs)
+          in A.map V.fromList (F.foldr trav (A.pure []) xs)
           end
       end
     end

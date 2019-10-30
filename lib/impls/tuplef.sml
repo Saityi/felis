@@ -1,4 +1,4 @@
-functor TupleAInstances (type b) = 
+functor TupleFInstances (type b) = 
 struct
   structure TupleFunctor : FUNCTOR = struct
     type 'a m = (b * 'a)

@@ -1,4 +1,4 @@
-functor ListInstances (structure L : LIST) =
+functor ListInstances (L : LIST) =
 struct
   local open L Base in
     structure ListMonoid : MONOID =

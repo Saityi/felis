@@ -11,12 +11,10 @@ struct
 
     structure SumMonoid : MONOID =
     struct
-      local open I in
         type 'a m = int
 
         fun empty () = fromInt 0
         fun append x y = x + y
-      end
     end
   end
 end

@@ -1,4 +1,4 @@
-functor OptionInstances (structure O : OPTION) = 
+functor OptionInstances (O : OPTION) = 
 struct
   structure OptionMonad : MONAD = struct
     type 'a m = 'a O.option

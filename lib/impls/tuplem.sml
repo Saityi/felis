@@ -1,4 +1,5 @@
-functor TupleMInstances (structure Ma : MONOID; type b) = 
+functor TupleMInstances (type b
+                         structure Ma : MONOID) = 
 struct
   structure TupleMonad : MONAD = 
   struct
@@ -15,7 +16,7 @@ struct
         end
   end
   
-  local structure M = TupleAInstances(type b = b) in
+  local structure M = TupleFInstances(type b = b) in
     structure TupleFoldable = M.TupleFoldable
   end
 
