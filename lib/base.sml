@@ -2,6 +2,8 @@
  * higher order functions *)
 structure Base = 
 struct
+  datatype ('a, 'b) either = left of 'a
+                           | right of 'b
   fun id x = x
   fun const a b = a
   fun uncurry f a b = f (a, b)

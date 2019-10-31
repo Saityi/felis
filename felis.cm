@@ -18,6 +18,8 @@ Group is
     lib/cats/traversable.sig
 
     lib/impls/function.sml
+    lib/impls/either.sml
+    lib/impls/kleisli.sml
     lib/impls/list.sml
     lib/impls/option.sml
     lib/impls/unit.sml

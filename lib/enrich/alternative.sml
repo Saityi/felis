@@ -10,5 +10,7 @@ struct
 
     fun some v = uncurry op :: <$> v <*> many v
     and many v = some v <|> A.pure []
+
+    fun optional v = SOME <$> v <|> A.pure NONE
   end
 end
