@@ -20,13 +20,14 @@ struct
       A.arr swap
 
     fun f &&& g = 
-      A.arr (fn b => (b, b)) >>> 
-      f *** g
+      A.arr dupe >>> f *** g
     
     fun returnA () = A.arr id
+
     fun f ^>> a = A.arr f >>> a
+    fun f ^<< a = A.arr f <<< a
+
     fun a >>^ f = a >>> A.arr f
     fun a <<^ f = a <<< A.arr f
-    fun f ^<< a = A.arr f <<< a
   end
 end

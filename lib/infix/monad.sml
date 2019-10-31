@@ -4,6 +4,6 @@ struct
     open A
 
     infix 1 >>=
-    fun f >>= ma = M.bind f ma  
+    fun ma >>= f = M.bind f ma  
   end
 end

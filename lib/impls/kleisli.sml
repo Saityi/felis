@@ -1,14 +1,26 @@
 functor Kleisli (structure M : MONAD) : ARROW =
 struct
-  datatype ('a, 'b) a = kleisli of ('a -> ('b M.m))
+  local 
+    structure MSyntax = MonadSyntax(M)
+    open MSyntax
+    infix 1 >>=
+  in
+    datatype ('a, 'b) a = kleisli of { run_kleisli : ('a -> ('b M.m)) }
 
-  val id = kleisli (fn x => M.pure x)
-  fun comp (kleisli f) (kleisli g) =
-    kleisli (fn b => M.bind f (g b))
-  
-  fun arr f = kleisli (M.pure o f)
-  fun first (kleisli f) = 
-    let fun k (b, d) =
-      M.bind (fn c => M.pure (c, d)) (f b)
-    in kleisli k end
+    val id = kleisli { run_kleisli = M.pure }
+    
+    fun comp (kleisli { run_kleisli = f }) 
+             (kleisli { run_kleisli = g }) =
+      let fun k b = (g b) >>= f
+      in kleisli { run_kleisli = k }
+      end
+    
+    fun arr f = 
+      kleisli { run_kleisli = M.pure o f }
+    
+    fun first (kleisli { run_kleisli = f }) = 
+      let fun k (b, d) = (f b) >>= (fn c => M.pure (c, d))
+      in kleisli { run_kleisli = k }
+      end
+  end
 end

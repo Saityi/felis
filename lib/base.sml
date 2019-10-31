@@ -11,6 +11,7 @@ struct
   fun flip f x y = f y x
   fun flipu f (x, y) = f (y, x)
   fun swap (x, y) = (y, x)
+  fun dupe v = (v, v)
 
   infix 9 $
   fun f $ x = f x
