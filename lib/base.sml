@@ -13,9 +13,9 @@ struct
   fun swap (x, y) = (y, x)
   fun dupe v = (v, v)
 
-  infix 9 $
+  infixr 0 $
   fun f $ x = f x
 
-  infix 6 |>
+  infix 9 |>
   fun x |> f = f x
 end

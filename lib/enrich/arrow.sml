@@ -5,7 +5,7 @@ struct
     open Base
   in
     open CE
-    infix 3 *** &&&
+    infixr 3 *** &&&
     infixr 1 <<< >>> ^>> >>^ ^<< <<^
 
     fun second f = 

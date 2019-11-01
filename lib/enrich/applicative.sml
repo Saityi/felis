@@ -14,12 +14,12 @@ struct
     infixr 4 <*
     fun a2 <* a1 = a1 *> a2
 
-    fun liftA2 f x y = f <$> x <*> y
 
     infix 4 <**>
     fun gs <**> fs = fs <*> gs
 
     fun liftA f a = A.pure f <*> a
+    fun liftA2 f a b = f a <*> b
     fun liftA3 f a b c = liftA2 f a b <*> c
   end
 end
