@@ -4,13 +4,17 @@ structure Base =
 struct
   datatype ('a, 'b) either = left of 'a
                            | right of 'b
+
+  type 'a id = { unid : 'a }
+  type ('a, 'b) const = { unconst : 'a }
+
   fun id x = x
   fun const a b = a
   fun uncurry f a b = f (a, b)
   fun curry f (a, b) = f a b
   fun flip f x y = f y x
-  fun flipu f (x, y) = f (y, x)
   fun swap (x, y) = (y, x)
+  fun flipu f = f o swap
   fun dupe v = (v, v)
 
   infixr 0 $

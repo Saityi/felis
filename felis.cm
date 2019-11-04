@@ -39,5 +39,6 @@ Group is
     lib/enrich/applicative.sml
     lib/enrich/arrow.sml
     lib/enrich/category.sml
+    lib/enrich/foldable.sml
     lib/enrich/functor.sml
     lib/enrich/monad.sml
