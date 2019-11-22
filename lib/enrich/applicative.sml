@@ -19,7 +19,7 @@ struct
     fun gs <**> fs = fs <*> gs
 
     fun liftA f a = A.pure f <*> a
-    fun liftA2 f a b = f a <*> b
-    fun liftA3 f a b c = liftA2 f a b <*> c
+    fun liftA2 f a b = (liftA f) a <*> b
+    fun liftA3 f a b c = (liftA2 f) a b <*> c
   end
 end

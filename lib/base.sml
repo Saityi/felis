@@ -15,6 +15,7 @@ struct
   fun flip f x y = f y x
   fun swap (x, y) = (y, x)
   fun flipu f = f o swap
+  fun pair a b = (a, b)
   fun dupe v = (v, v)
 
   infixr 0 $
