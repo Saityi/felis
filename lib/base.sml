@@ -10,6 +10,8 @@ struct
 
   fun id x = x
   fun const a b = a
+  (* SML is strict, but (flip const) is still useful*)
+  fun seq a b = b
   fun uncurry f a b = f (a, b)
   fun curry f (a, b) = f a b
   fun flip f x y = f y x
@@ -17,6 +19,8 @@ struct
   fun flipu f = f o swap
   fun pair a b = (a, b)
   fun dupe v = (v, v)
+  fun fst (a, _) = a
+  fun snd (_, b) = b
 
   infixr 0 $
   fun f $ x = f x

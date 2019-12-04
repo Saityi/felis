@@ -11,8 +11,10 @@ struct
     fun ap (u, f) (v, x) = (Ma.append u v, f x)
     
     fun bind f (u, a) = 
-        let val (u', b) = f a in
-        (Ma.append u' u, b)
+        let 
+          val (u', b) = f a 
+        in
+          (Ma.append u' u, b)
         end
   end
   

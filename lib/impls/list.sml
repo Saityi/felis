@@ -50,8 +50,10 @@ struct
         infix 6 <$> <*>
       in
         fun traverse f xs =
-          let fun trav x ys = (uncurry op ::) <$> (f x) <*> ys
-          in F.foldr trav (A.pure nil) xs
+          let 
+            fun trav x ys = (uncurry op ::) <$> (f x) <*> ys
+          in 
+            F.foldr trav (A.pure nil) xs
           end
       end
     end

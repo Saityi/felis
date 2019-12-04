@@ -16,9 +16,11 @@ struct
 
     fun pure a = V.fromList [a]
     fun ap fs vs =
-      let fun ap' (f, acc) = VectorMonoid.append (V.map f vs) acc
-          val start = V.fromList []
-      in V.foldr ap' start fs
+      let 
+        fun ap' (f, acc) = VectorMonoid.append (V.map f vs) acc
+        val start = V.fromList []
+      in 
+        V.foldr ap' start fs
       end
 
     fun bind f vs =
@@ -42,8 +44,10 @@ struct
         infix 6 <$> <*>
       in
         fun traverse f xs =
-          let fun trav x ys = (uncurry op ::) <$> (f x) <*> ys
-          in A.map V.fromList (F.foldr trav (A.pure []) xs)
+          let 
+            fun trav x ys = (uncurry op ::) <$> (f x) <*> ys
+          in 
+            A.map V.fromList (F.foldr trav (A.pure []) xs)
           end
       end
     end

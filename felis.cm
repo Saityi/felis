@@ -24,6 +24,7 @@ Group is
     lib/impls/option.sml
     lib/impls/unit.sml
     lib/impls/string.sml
+    lib/impls/state.sml
     lib/impls/int.sml
     lib/impls/vector.sml
     lib/impls/tuplef.sml
