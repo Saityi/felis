@@ -39,7 +39,7 @@ struct
       structure A = VectorMonad
       structure F = VectorFoldable
       local
-        structure S = ApplicativeEnrichments(A)
+        structure S = ApplicativeMethods(A)
         open S Base
         infix 6 <$> <*>
       in

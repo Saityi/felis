@@ -45,7 +45,7 @@ struct
       structure A = ListMonad
       structure F = ListFoldable
       local
-        structure S = ApplicativeEnrichments(A)
+        structure S = ApplicativeMethods(A)
         open S
         infix 6 <$> <*>
       in

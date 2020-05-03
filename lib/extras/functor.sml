@@ -1,4 +1,4 @@
-functor FunctorEnrichments (F : FUNCTOR) = 
+functor FunctorMethods (F : FUNCTOR) = 
 struct
   local
     structure S = FunctorSyntax(F)

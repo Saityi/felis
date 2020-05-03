@@ -1,4 +1,4 @@
-structure FunctionArrow : ARROW =
+structure FunctionArrow =
 struct
   type ('a, 'b) a = 'a -> 'b
 
@@ -7,6 +7,7 @@ struct
   fun arr f = f
   fun first g (x, y) = (g x, y)
 end
+local structure FA : ARROW = FunctionArrow in end
 
 (* TODO : Some sort of better encoding ... ? *)
 functor FunctionMonad (type b) : MONAD =

@@ -1,4 +1,4 @@
-functor CategoryEnrichments (C : CATEGORY) =
+functor CategoryMethods (C : CATEGORY) =
 struct
   infixr 1 >>> <<<
   

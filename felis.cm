@@ -13,6 +13,7 @@ Group is
 
     lib/cats/semigroup.sig
     lib/cats/monoid.sig
+    lib/cats/group.sig
 
     lib/cats/foldable.sig
     lib/cats/traversable.sig
@@ -26,6 +27,7 @@ Group is
     lib/impls/string.sml
     lib/impls/state.sml
     lib/impls/int.sml
+    lib/impls/real.sml
     lib/impls/vector.sml
     lib/impls/tuplef.sml
     lib/impls/tuplem.sml
@@ -36,10 +38,10 @@ Group is
     lib/infix/monad.sml
     lib/infix/monoid.sml
 
-    lib/enrich/alternative.sml
-    lib/enrich/applicative.sml
-    lib/enrich/arrow.sml
-    lib/enrich/category.sml
-    lib/enrich/foldable.sml
-    lib/enrich/functor.sml
-    lib/enrich/monad.sml
+    lib/extras/alternative.sml
+    lib/extras/applicative.sml
+    lib/extras/arrow.sml
+    lib/extras/category.sml
+    lib/extras/foldable.sml
+    lib/extras/functor.sml
+    lib/extras/monad.sml

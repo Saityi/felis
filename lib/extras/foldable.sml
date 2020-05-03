@@ -1,4 +1,4 @@
-functor FoldableEnrichments (F : FOLDABLE) =
+functor FoldableMethods (F : FOLDABLE) =
 struct
   local open Base F in
     infix 0 $
@@ -28,11 +28,11 @@ struct
   end
 end
 
-functor FoldableMonoidalEnrichments (structure F : FOLDABLE
+functor FoldableMonoidalMethods (structure F : FOLDABLE
                                      structure M : MONOID) =
 struct
   local
-    structure FE = FoldableEnrichments(F)
+    structure FE = FoldableMethods(F)
   in
     open FE
     fun foldMap f vs = 

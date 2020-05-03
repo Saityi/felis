@@ -1,7 +1,7 @@
-functor ArrowEnrichments (A : ARROW) = 
+functor ArrowMethods (A : ARROW) = 
 struct
   local
-    structure CE = CategoryEnrichments(A)
+    structure CE = CategoryMethods(A)
     open Base
   in
     open CE

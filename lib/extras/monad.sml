@@ -1,8 +1,8 @@
-functor MonadEnrichments (M : MONAD) = 
+functor MonadMethods (M : MONAD) = 
 struct
   local
     structure S = MonadSyntax(M)
-    structure A = ApplicativeEnrichments(M)
+    structure A = ApplicativeMethods(M)
     infix 1 >>=
   in
     open S A

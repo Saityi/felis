@@ -1,8 +1,8 @@
-functor ApplicativeEnrichments (A : APPLICATIVE) = 
+functor ApplicativeMethods (A : APPLICATIVE) = 
 struct
   local
     structure S = ApplicativeSyntax(A)
-    structure E = FunctorEnrichments(A)
+    structure E = FunctorMethods(A)
     open Base
     infix 6 <$> <*>
   in
