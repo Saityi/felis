@@ -29,12 +29,13 @@ struct
 end
 
 functor FoldableMonoidalMethods (structure F : FOLDABLE
-                                     structure M : MONOID) =
+                                 structure M : MONOID) =
 struct
   local
     structure FE = FoldableMethods(F)
+    structure ME = MonoidMethods(M)
   in
-    open FE
+    open FE ME
     fun foldMap f vs = 
       let 
         fun foldm' v acc = M.append (f v) acc

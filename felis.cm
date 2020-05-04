@@ -45,3 +45,5 @@ Group is
     lib/extras/foldable.sml
     lib/extras/functor.sml
     lib/extras/monad.sml
+    lib/extras/monoid.sml
+

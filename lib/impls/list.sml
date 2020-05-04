@@ -1,6 +1,7 @@
 functor ListInstances (L : LIST) =
 struct
   local open L Base in
+
     structure ListMonoid : MONOID =
     struct
       type 'a m = 'a list
@@ -44,18 +45,12 @@ struct
     struct
       structure A = ListMonad
       structure F = ListFoldable
-      local
-        structure S = ApplicativeMethods(A)
-        open S
-        infix 6 <$> <*>
-      in
-        fun traverse f xs =
-          let 
-            fun trav x ys = (uncurry op ::) <$> (f x) <*> ys
-          in 
-            F.foldr trav (A.pure nil) xs
-          end
-      end
+      fun traverse f xs =
+        let 
+          fun trav x ys = A.ap (A.map (uncurry op ::) (f x)) ys
+        in 
+          F.foldr trav (A.pure nil) xs
+        end
     end
   end
 end
