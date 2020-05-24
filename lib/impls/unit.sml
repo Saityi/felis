@@ -1,4 +1,4 @@
-structure UnitInstances = 
+structure UnitInstances =
 struct
    type 'a m = unit
 
@@ -8,5 +8,5 @@ struct
 end
 
 local
-   structure UI : GROUP = UnitInstances 
+   structure UI : GROUP = UnitInstances
 in end

@@ -1,4 +1,4 @@
-functor FunctorMethods (F : FUNCTOR) = 
+functor FunctorMethods (F : FUNCTOR) =
 struct
   local
     structure S = FunctorSyntax(F)
@@ -6,7 +6,7 @@ struct
     infix 6 <$>
   in
     open S
-    
+
     infix 4 $>
     fun fa $> c = (const c) <$> fa
 

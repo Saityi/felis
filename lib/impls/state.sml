@@ -6,28 +6,28 @@ struct
   structure M = TupleFInstances (type b = s)
   structure F = M.TupleFunctor
 
-  fun map f (state {runState=g}) = 
+  fun map f (state {runState=g}) =
     state { runState = fn s => F.map f (g s) }
 
-  fun pure v = 
+  fun pure v =
     state { runState = fn s => (s, v) }
-  
-  fun ap (state {runState=fs}) (state {runState=vs}) = 
+
+  fun ap (state {runState=fs}) (state {runState=vs}) =
     state { runState = fn s =>
-      let 
+      let
         val (s', v) = vs s
         val (s'', f) = fs s'
-      in 
+      in
         (s'', f v)
       end
     }
 
-  fun bind k (state {runState=q}) = 
+  fun bind k (state {runState=q}) =
     state { runState = fn s =>
-      let 
+      let
         val (s', v) = q s
         val (state {runState=q'}) = k v
-      in 
+      in
         q' s'
       end
     }

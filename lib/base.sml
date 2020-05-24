@@ -1,6 +1,6 @@
 (* This provides a set of common functions and
  * higher order functions *)
-structure Base = 
+structure Base =
 struct
   datatype ('a, 'b) either = left of 'a
                            | right of 'b

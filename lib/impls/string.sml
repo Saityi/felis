@@ -1,7 +1,7 @@
-functor StringInstances (S : STRING) : MONOID = 
+functor StringInstances (S : STRING) : MONOID =
 struct
-  local 
-    open S Base 
+  local
+    open S Base
   in
     type 'a m = string
 

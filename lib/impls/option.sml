@@ -1,4 +1,4 @@
-functor OptionInstances (O : OPTION) = 
+functor OptionInstances (O : OPTION) =
 struct
   structure OptionMonad : MONAD = struct
     type 'a m = 'a O.option
@@ -24,7 +24,7 @@ struct
     structure F = OptionFoldable
 
     fun traverse f O.NONE = A.pure O.NONE
-      | traverse f (O.SOME v) = A.map O.SOME (f v) 
+      | traverse f (O.SOME v) = A.map O.SOME (f v)
   end
 
 end

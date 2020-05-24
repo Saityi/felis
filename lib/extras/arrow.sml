@@ -1,4 +1,4 @@
-functor ArrowMethods (A : ARROW) = 
+functor ArrowMethods (A : ARROW) =
 struct
   local
     structure CE = CategoryMethods(A)
@@ -8,20 +8,20 @@ struct
     infixr 3 *** &&&
     infixr 1 <<< >>> ^>> >>^ ^<< <<^
 
-    fun second f = 
-      A.arr swap >>> 
-      A.first f >>> 
+    fun second f =
+      A.arr swap >>>
+      A.first f >>>
       A.arr swap
 
-    fun f *** g = 
-      A.first f >>> 
-      A.arr swap >>> 
-      A.first g >>> 
+    fun f *** g =
+      A.first f >>>
+      A.arr swap >>>
+      A.first g >>>
       A.arr swap
 
-    fun f &&& g = 
+    fun f &&& g =
       A.arr dupe >>> f *** g
-    
+
     fun returnA () = A.arr id
 
     fun f ^>> a = A.arr f >>> a

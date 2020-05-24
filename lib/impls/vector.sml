@@ -3,7 +3,7 @@ struct
   structure VectorMonoid : MONOID =
   struct
     type 'a m = 'a V.vector
-    
+
     fun append vs ws = V.concat [vs, ws]
     fun empty () = V.fromList []
   end
@@ -16,10 +16,10 @@ struct
 
     fun pure a = V.fromList [a]
     fun ap fs vs =
-      let 
+      let
         fun ap' (f, acc) = VectorMonoid.append (V.map f vs) acc
         val start = V.fromList []
-      in 
+      in
         V.foldr ap' start fs
       end
 
@@ -44,9 +44,9 @@ struct
         infix 6 <$> <*>
       in
         fun traverse f xs =
-          let 
+          let
             fun trav x ys = (uncurry op ::) <$> (f x) <*> ys
-          in 
+          in
             A.map V.fromList (F.foldr trav (A.pure []) xs)
           end
       end

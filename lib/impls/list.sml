@@ -18,7 +18,7 @@ struct
         fun pure a = a :: nil
         fun ap nil xs        = empty ()
           | ap (f :: fs) xs  = append (map f xs) (ap fs xs)
-        
+
         fun bind f xs = concat (map f xs)
       end
     end
@@ -46,9 +46,9 @@ struct
       structure A = ListMonad
       structure F = ListFoldable
       fun traverse f xs =
-        let 
+        let
           fun trav x ys = A.ap (A.map (uncurry op ::) (f x)) ys
-        in 
+        in
           F.foldr trav (A.pure nil) xs
         end
     end
