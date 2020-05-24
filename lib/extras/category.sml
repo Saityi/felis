@@ -1,5 +1,4 @@
-functor CategoryMethods (C : CATEGORY) =
-struct
+functor CategoryMethods (C : CATEGORY) = struct
   infixr 1 >>> <<<
 
   fun f >>> g = C.comp g f

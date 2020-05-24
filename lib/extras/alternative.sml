@@ -1,5 +1,4 @@
-functor AlternativeMethods (A : ALTERNATIVE) =
-struct
+functor AlternativeMethods (A : ALTERNATIVE) = struct
   local
     structure S = AlternativeSyntax(A)
     structure E = ApplicativeMethods(A)

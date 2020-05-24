@@ -1,7 +1,6 @@
 (* This provides a set of common functions and
  * higher order functions *)
-structure Base =
-struct
+structure Base = struct
   datatype ('a, 'b) either = left of 'a
                            | right of 'b
 
@@ -10,7 +9,7 @@ struct
 
   fun id x = x
   fun const a b = a
-  (* SML is strict, but (flip const) is still useful*)
+  (* SML is strict, but (flip const) is still useful *)
   fun seq a b = b
   fun uncurry f a b = f (a, b)
   fun curry f (a, b) = f a b

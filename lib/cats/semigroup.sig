@@ -1,6 +1,5 @@
-signature SEMIGROUP = 
-sig
-    type 'a m
+signature SEMIGROUP = sig
+  type 'a m
 
-    val append : 'a m -> 'a m -> 'a m
+  val append : 'a m -> 'a m -> 'a m
 end

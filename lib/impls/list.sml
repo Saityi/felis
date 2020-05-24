@@ -1,17 +1,14 @@
-functor ListInstances (L : LIST) =
-struct
+functor ListInstances (L : LIST) = struct
   local open L Base in
 
-    structure ListMonoid : MONOID =
-    struct
+    structure Monoid : MONOID = struct
       type 'a m = 'a list
       fun append xs ys = xs @ ys
       fun empty () = nil
     end
 
-    structure ListMonad : MONAD =
-    struct
-      local open ListMonoid in
+    structure Monad : MONAD = struct
+      local open Monoid in
         type 'a m = 'a list
         val map = L.map
 
@@ -23,28 +20,26 @@ struct
       end
     end
 
-    structure ListAlternative : ALTERNATIVE =
-    struct
-      local open ListMonoid in
-        open ListMonad
+    structure Alternative : ALTERNATIVE = struct
+      local open Monoid in
+        open Monad
         type 'a m = 'a list
         val alt = append
         val empty = empty
       end
     end
 
-    structure ListFoldable : FOLDABLE =
-    struct
+    structure Foldable : FOLDABLE = struct
       type 'a m = 'a list
 
       fun foldr f = L.foldr (curry f)
     end
 
-    structure ListTraversable : TRAVERSABLE =
-    (* For lists of lists *)
-    struct
-      structure A = ListMonad
-      structure F = ListFoldable
+    structure Traversable : TRAVERSABLE = struct
+      (* For lists of lists *)
+
+      structure A = Monad
+      structure F = Foldable
       fun traverse f xs =
         let
           fun trav x ys = A.ap (A.map (uncurry op ::) (f x)) ys

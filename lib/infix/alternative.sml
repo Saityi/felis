@@ -1,5 +1,4 @@
-functor AlternativeSyntax (A : ALTERNATIVE) =
-struct
+functor AlternativeSyntax (A : ALTERNATIVE) = struct
   local structure AS = ApplicativeSyntax(A) in
     open AS
 

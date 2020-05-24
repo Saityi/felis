@@ -1,5 +1,4 @@
-functor MonadMethods (M : MONAD) =
-struct
+functor MonadMethods (M : MONAD) = struct
   local
     structure S = MonadSyntax(M)
     structure A = ApplicativeMethods(M)

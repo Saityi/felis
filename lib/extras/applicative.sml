@@ -1,5 +1,4 @@
-functor ApplicativeMethods (A : APPLICATIVE) =
-struct
+functor ApplicativeMethods (A : APPLICATIVE) = struct
   local
     structure S = ApplicativeSyntax(A)
     structure E = FunctorMethods(A)

@@ -1,5 +1,4 @@
-functor MonadSyntax (M : MONAD) =
-struct
+functor MonadSyntax (M : MONAD) = struct
   local structure A = ApplicativeSyntax(M) in
     open A
 

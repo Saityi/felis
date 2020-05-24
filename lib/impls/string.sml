@@ -1,5 +1,4 @@
-functor StringInstances (S : STRING) : MONOID =
-struct
+functor StringInstances (S : STRING) : MONOID = struct
   local
     open S Base
   in

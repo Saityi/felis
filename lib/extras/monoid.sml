@@ -1,5 +1,4 @@
-functor MonoidMethods (M : MONOID) =
-struct
+functor MonoidMethods (M : MONOID) = struct
   local
     structure S = MonoidSyntax(M)
     open Base

@@ -1,5 +1,4 @@
-functor ArrowMethods (A : ARROW) =
-struct
+functor ArrowMethods (A : ARROW) = struct
   local
     structure CE = CategoryMethods(A)
     open Base

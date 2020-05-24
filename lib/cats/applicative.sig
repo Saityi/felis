@@ -1,5 +1,4 @@
-signature APPLICATIVE = 
-sig
+signature APPLICATIVE = sig
   include FUNCTOR
 
   val pure : 'a -> 'a m

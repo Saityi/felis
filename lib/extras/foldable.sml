@@ -1,5 +1,4 @@
-functor FoldableMethods (F : FOLDABLE) =
-struct
+functor FoldableMethods (F : FOLDABLE) = struct
   local open Base F in
     infix 0 $
 
@@ -29,8 +28,7 @@ struct
 end
 
 functor FoldableMonoidalMethods (structure F : FOLDABLE
-                                 structure M : MONOID) =
-struct
+                                 structure M : MONOID) = struct
   local
     structure FE = FoldableMethods(F)
     structure ME = MonoidMethods(M)

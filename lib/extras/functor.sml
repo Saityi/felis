@@ -1,5 +1,4 @@
-functor FunctorMethods (F : FUNCTOR) =
-struct
+functor FunctorMethods (F : FUNCTOR) = struct
   local
     structure S = FunctorSyntax(F)
     open Base

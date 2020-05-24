@@ -1,8 +1,6 @@
 functor TupleMInstances (type b
-                         structure Ma : MONOID) =
-struct
-  structure TupleMonad : MONAD =
-  struct
+                         structure Ma : MONOID) = struct
+  structure Monad : MONAD = struct
     type 'a m = (b Ma.m * 'a)
 
     fun map f (b, a) = (b, f a)
@@ -19,13 +17,12 @@ struct
   end
 
   local structure M = TupleFInstances(type b = b) in
-    structure TupleFoldable = M.TupleFoldable
+    structure Foldable = M.Foldable
   end
 
-  structure TupleTraversable : TRAVERSABLE =
-  struct
-    structure A = TupleMonad
-    structure F = TupleFoldable
+  structure Traversable : TRAVERSABLE = struct
+    structure A = Monad
+    structure F = Foldable
 
     fun traverse f (x, y) =
       A.map (fn y' => (x, y')) (f y)

@@ -1,5 +1,4 @@
-functor ApplicativeSyntax (A : APPLICATIVE) =
-struct
+functor ApplicativeSyntax (A : APPLICATIVE) = struct
   local structure F = FunctorSyntax(A) in
     open F
 

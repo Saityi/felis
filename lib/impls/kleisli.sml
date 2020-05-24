@@ -1,5 +1,4 @@
-functor Kleisli (structure M : MONAD) : ARROW =
-struct
+functor Kleisli (structure M : MONAD) : ARROW = struct
   local
     structure MSyntax = MonadSyntax(M)
     open MSyntax

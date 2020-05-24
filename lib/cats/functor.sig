@@ -1,6 +1,5 @@
-signature FUNCTOR = 
-sig
+signature FUNCTOR = sig
   type 'a m
-  
+
   val map : ('a -> 'b) -> 'a m -> 'b m
-end 
+end

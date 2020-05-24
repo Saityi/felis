@@ -1,5 +1,4 @@
-signature ARROW =
-sig
+signature ARROW = sig
   include CATEGORY
 
   val arr : ('a -> 'b) -> ('a, 'b) a

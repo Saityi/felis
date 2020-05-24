@@ -1,10 +1,9 @@
-functor StateMonad (type s) : MONAD =
-struct
+functor StateMonad (type s) : MONAD = struct
   open Base
   infix 0 $
   datatype 'a m = state of { runState : s -> (s * 'a) }
   structure M = TupleFInstances (type b = s)
-  structure F = M.TupleFunctor
+  structure F = M.Functor
 
   fun map f (state {runState=g}) =
     state { runState = fn s => F.map f (g s) }
