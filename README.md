@@ -28,18 +28,9 @@ structure L :
 
 - structure LT = L.Traversable(L.Monad);
 structure LT : TRAVERSABLE
+
 - structure LF = FunctorMethods(L.Monad);
 structure LF :
-  sig
-    val <$> : ('a -> 'b) * 'a F.m -> 'b F.m
-    val $> : 'a F.m * 'b -> 'b F.m
-    val <$ : 'a * 'b F.m -> 'a F.m
-    val <&> : 'a F.m * ('a -> 'b) -> 'b F.m
-    val void : 'a F.m -> unit F.m
-  end
-
-- structure LFMethods = FunctorMethods(L.Monad);
-structure LFMethods :
   sig
     val <$> : ('a -> 'b) * 'a F.m -> 'b F.m
     val $> : 'a F.m * 'b -> 'b F.m
