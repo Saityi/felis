@@ -4,13 +4,10 @@ structure Base = struct
   datatype ('a, 'b) either = left of 'a
                            | right of 'b
 
-  type 'a id = { unid : 'a }
-  type ('a, 'b) const = { unconst : 'a }
-
+  type 'a id = 'a
   fun id x = x
   fun const a b = a
-  (* SML is strict, but (flip const) is still useful *)
-  fun seq a b = b
+  fun seq a b = let val a = a in b end
   fun uncurry f a b = f (a, b)
   fun curry f (a, b) = f a b
   fun flip f x y = f y x

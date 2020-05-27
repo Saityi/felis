@@ -20,6 +20,7 @@ Group is
 
     lib/impls/function.sml
     lib/impls/either.sml
+    lib/impls/identity.sml
     lib/impls/kleisli.sml
     lib/impls/list.sml
     lib/impls/option.sml
