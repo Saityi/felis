@@ -13,5 +13,19 @@ functor EitherInstances (type b) = struct
       fun bind f (right ra) = f ra
         | bind f (left v) = left v
     end
+
+    structure Foldable : FOLDABLE = struct
+      type 'a m = (b, 'a) either
+      fun foldr f z (left e) = z
+        | foldr f z (right e) = f e z
+    end
+
+    functor Traversable (A : APPLICATIVE) : TRAVERSABLE = struct
+      structure A = A
+      structure F = Foldable
+
+      fun traverse f (left e) = A.pure (left e)
+        | traverse f (right e) = A.map right (f e)
+    end
   end
 end

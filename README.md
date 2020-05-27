@@ -23,7 +23,19 @@ structure L :
     structure Monad : <sig>
     structure Alternative : <sig>
     structure Foldable : <sig>
-    structure Traversable : <sig>
+    functor Traversable : <fctsig>
+  end
+
+- structure LT = L.Traversable(L.Monad);
+structure LT : TRAVERSABLE
+- structure LF = FunctorMethods(L.Monad);
+structure LF :
+  sig
+    val <$> : ('a -> 'b) * 'a F.m -> 'b F.m
+    val $> : 'a F.m * 'b -> 'b F.m
+    val <$ : 'a * 'b F.m -> 'a F.m
+    val <&> : 'a F.m * ('a -> 'b) -> 'b F.m
+    val void : 'a F.m -> unit F.m
   end
 
 - structure LFMethods = FunctorMethods(L.Monad);
@@ -36,7 +48,7 @@ structure LFMethods :
     val void : 'a F.m -> unit F.m
   end
 
-- open Base L LFMethods;
+- open Base L LF;
 - infix 6 <$>;
 - (fn x => x + 1) <$> [1, 2, 3];
 val it = [2,3,4] : int Monad.m
@@ -44,7 +56,7 @@ val it = [2,3,4] : int Monad.m
 - void [1, 2, 3, 4, 5];
 val it = [(),(),(),(),()] : unit Monad.m
 
-- L.Traversable.traverse id [[0, 1], [1, 0]];
+- LT.traverse id [[0, 1], [1, 0]];
 val it = [[0,1],[0,0],[1,1],[1,0]] : int Foldable.m Monad.m
 ```
 

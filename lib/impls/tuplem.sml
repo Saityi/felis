@@ -20,8 +20,8 @@ functor TupleMInstances (type b
     structure Foldable = M.Foldable
   end
 
-  structure Traversable : TRAVERSABLE = struct
-    structure A = Monad
+  functor Traversable (A : APPLICATIVE) : TRAVERSABLE = struct
+    structure A = A
     structure F = Foldable
 
     fun traverse f (x, y) =

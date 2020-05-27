@@ -19,8 +19,8 @@ struct
       | foldr f z (O.SOME v) = f v z
   end
 
-  structure Traversable : TRAVERSABLE = struct
-    structure A = Monad
+  functor Traversable (A : APPLICATIVE) : TRAVERSABLE = struct
+    structure A = A
     structure F = Foldable
 
     fun traverse f O.NONE = A.pure O.NONE

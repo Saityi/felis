@@ -35,10 +35,10 @@ functor ListInstances (L : LIST) = struct
       fun foldr f = L.foldr (curry f)
     end
 
-    structure Traversable : TRAVERSABLE = struct
-      (* For lists of lists *)
+    functor Traversable (A : APPLICATIVE) : TRAVERSABLE = struct
+      (* For lists of effects *)
 
-      structure A = Monad
+      structure A = A
       structure F = Foldable
       fun traverse f xs =
         let

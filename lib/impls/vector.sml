@@ -30,8 +30,8 @@ functor VectorInstances(V : VECTOR) = struct
     fun foldr f = V.foldr (Base.curry f)
   end
 
-  structure Traversable : TRAVERSABLE = struct
-    structure A = Monad
+  functor Traversable (A : APPLICATIVE) : TRAVERSABLE = struct
+    structure A = A
     structure F = Foldable
     local
       structure S = ApplicativeMethods(A)
