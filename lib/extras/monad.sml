@@ -6,5 +6,6 @@ functor MonadMethods (M : MONAD) = struct
   in
     open S A
     fun join ma = ma >>= Base.id
+    fun liftM f m = m >>= pure o f
   end
 end

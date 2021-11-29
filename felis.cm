@@ -8,7 +8,13 @@ Group is
 
     lib/cats/alternative.sig
     lib/cats/applicative.sig
+    lib/cats/bifunctor.sig
     lib/cats/functor.sig
+    lib/cats/contravariant.sig
+    lib/cats/profunctor.sig
+    lib/cats/cartesian.sig
+    lib/cats/cocartesian.sig
+    lib/cats/comonad.sig
     lib/cats/monad.sig
 
     lib/cats/semigroup.sig
@@ -43,8 +49,9 @@ Group is
     lib/extras/applicative.sml
     lib/extras/arrow.sml
     lib/extras/category.sml
+    lib/extras/comonad.sml
     lib/extras/foldable.sml
     lib/extras/functor.sml
     lib/extras/monad.sml
     lib/extras/monoid.sml
-
+    lib/extras/profunctor.sml

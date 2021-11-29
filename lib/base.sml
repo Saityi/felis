@@ -5,6 +5,8 @@ structure Base = struct
                            | right of 'b
 
   type 'a id = 'a
+  fun either f _ (left x) = f x
+    | either _ g (right y) = g y
   fun id x = x
   fun const a b = a
   fun seq a b = let val a = a in b end
