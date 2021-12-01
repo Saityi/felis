@@ -1,5 +1,6 @@
 structure FunctionInstances = struct
   structure Arrow : ARROW = struct
+    (* Is-a category *)
     type ('a, 'b) a = 'a -> 'b
 
     fun id x = x
@@ -8,7 +9,13 @@ structure FunctionInstances = struct
     fun first g (x, y) = (g x, y)
   end
 
+  functor Contravariant (type b) : CONTRAVARIANT = struct
+    type 'a m = 'a -> b
+    fun contramap f g = g o f
+  end
+
   functor Monad (type b) : MONAD = struct
+    (* Is-a Functor, Is-an Applicative *)
     type 'a m = (b -> 'a)
     val map = Arrow.comp
     val pure = Base.const
@@ -33,5 +40,11 @@ structure FunctionInstances = struct
     fun left f = B.either (B.left o f) B.right
     fun right f = B.either B.left (B.right o f)
     end
+  end
+
+  structure Monoidal : MONOIDAL = struct
+    open Profunctor
+    fun par f g (a, c) = (f a, g c)
+    val empty = Base.id
   end
 end

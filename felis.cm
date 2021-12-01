@@ -11,11 +11,13 @@ Group is
     lib/cats/bifunctor.sig
     lib/cats/functor.sig
     lib/cats/contravariant.sig
+    lib/cats/comonad.sig
+    lib/cats/monad.sig
+
     lib/cats/profunctor.sig
     lib/cats/cartesian.sig
     lib/cats/cocartesian.sig
-    lib/cats/comonad.sig
-    lib/cats/monad.sig
+    lib/cats/monoidal.sig
 
     lib/cats/semigroup.sig
     lib/cats/monoid.sig
@@ -38,6 +40,8 @@ Group is
     lib/impls/vector.sml
     lib/impls/tuplef.sml
     lib/impls/tuplem.sml
+    lib/impls/upstar.sml
+    lib/impls/optics.sml
 
     lib/infix/alternative.sml
     lib/infix/applicative.sml
