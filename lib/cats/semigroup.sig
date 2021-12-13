@@ -1,5 +1,5 @@
 signature SEMIGROUP = sig
-  type 'a m
+  include HKT
 
   val append : 'a m -> 'a m -> 'a m
 end

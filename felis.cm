@@ -3,6 +3,8 @@ Group is
 
     lib/base.sml
 
+    lib/cats/hkt.sig
+
     lib/cats/category.sig
     lib/cats/arrow.sig
 
@@ -40,7 +42,10 @@ Group is
     lib/impls/vector.sml
     lib/impls/tuplef.sml
     lib/impls/tuplem.sml
-    lib/impls/upstar.sml
+    lib/impls/constant.sml
+    lib/impls/forget.sml
+    lib/impls/star.sml
+    lib/impls/tagged.sml
     lib/impls/optics.sml
 
     lib/infix/alternative.sml

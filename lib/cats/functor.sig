@@ -1,5 +1,5 @@
 signature FUNCTOR = sig
-  type 'a m
+  include HKT
 
   val map : ('a -> 'b) -> 'a m -> 'b m
 end

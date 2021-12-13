@@ -17,8 +17,8 @@ structure FunctionInstances = struct
   functor Monad (type b) : MONAD = struct
     (* Is-a Functor, Is-an Applicative *)
     type 'a m = (b -> 'a)
-    val map = Arrow.comp
-    val pure = Base.const
+    fun map f g = f o g
+    fun pure v = fn _ => v
     fun ap f g r = f r (g r)
     fun bind k f = fn r => k (f r) r
   end
@@ -45,6 +45,6 @@ structure FunctionInstances = struct
   structure Monoidal : MONOIDAL = struct
     open Profunctor
     fun par f g (a, c) = (f a, g c)
-    val empty = Base.id
+    fun empty () = Base.id
   end
 end
