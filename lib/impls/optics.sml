@@ -38,10 +38,7 @@ structure Optics = struct
             fun t (a, (b, c)) = ((a, b), c)
         in adapter { from = f, to = t }
         end
-      functor ProfunctorAdapter (type a; type b) : PROFUNCTOR = struct
-        type ('s, 't) m = ('s, 't, a, b) adapter
-        fun dimap f g (adapter{from=fr,to=t}) = adapter{from=fr o f, to=g o t}
-      end
+
       datatype ('s, 't, 'a, 'b) prism =
         prism of { match : 's -> ('a, 't) Base.either
                 , build : 'b -> 't
@@ -82,37 +79,43 @@ structure Optics = struct
     end (* END local *)
   end (* END struct Concrete *)
 
-  functor Profunctor (structure P : PROFUNCTOR) = struct
-  local
-    open Base
-    structure T  = Tagged
-    structure F  = Forget
-    structure C  = Constant
-    infix 0 $
-  in
-    type ('s, 't, 'a, 'b) optic = ('a, 'b) P.m -> ('s, 't) P.m
+  (* Via https://github.com/solomon-b/profunctor-optics/blob/master/src/Data/Optics.hs*)
+  (* https://r6research.livejournal.com/27476.html *)
+  functor Adapter (structure P : PROFUNCTOR) = struct
+    local
+      open Base
+      structure T  = Tagged
+      structure F  = Forget
+      structure C  = Constant
+      infix 0 $
+    in
+      type ('s, 't, 'a, 'b) adapter = ('a, 'b) P.a -> ('s, 't) P.a
+      fun adapter (f : 's -> 'a) (g : 'b -> 't) : ('s, 't, 'a, 'b) adapter =
+        P.dimap f g
+      fun from adapt s =
+        (F.runForget o adapt $ F.forget id) s
+      fun to adapt b =
+        (T.unTagged o adapt o T.tagged) b
+      fun shift () =
+        let fun f ((a, b), c) = (a, (b, c))
+            fun t (a, (b, c)) = ((a, b), c)
+        in adapter f t
+        end
+      fun adapterC2P (Concrete.adapter{from=f, to=t}) : ('s, 't, 'a, 'b) adapter = P.dimap f t
+    end
+  end
 
-    (* Via https://github.com/solomon-b/profunctor-optics/blob/master/src/Data/Optics.hs*)
-    type ('s, 't, 'a, 'b) adapter = ('s, 't, 'a, 'b) optic
-    fun adapter (f : 's -> 'a) (g : 'b -> 't) : ('s, 't, 'a, 'b) adapter =
-      P.dimap f g
-    fun from adapt s =
-      (F.runForget o adapt $ F.forget id) s
-    fun to adapt b =
-      (T.unTagged o adapt o T.tagged) b
-    fun shift () =
-      let fun f ((a, b), c) = (a, (b, c))
-          fun t (a, (b, c)) = ((a, b), c)
-      in adapter f t
-      end
-    fun adapterC2P (Concrete.adapter{from=f, to=t}) : ('s, 't, 'a, 'b) adapter = P.dimap f t
-
-    functor Lens (structure PC : CARTESIAN) = struct
-      local
-          structure PCM = ProfunctorMethods(PC)
-      in
-      type ('s, 't, 'a, 'b) lens = ('s, 't, 'a, 'b) optic
-      fun lens' to l = PC.dimap to (fn (b, f) => f b) (PC.first l)
+  functor Lens (structure P : CARTESIAN) = struct
+    local
+      open Base
+      structure T  = Tagged
+      structure F  = Forget
+      structure C  = Constant
+      infix 0 $
+      structure PM = ProfunctorMethods(P)
+    in
+      type ('s, 't, 'a, 'b) lens = ('a, 'b) P.a -> ('s, 't) P.a
+      fun lens' to l = P.dimap to (fn (b, f) => f b) (P.first l)
       fun lens get set = lens' $ (fn s => (get s, set s))
       fun one () =
         let val f = fst
@@ -124,18 +127,17 @@ structure Optics = struct
             fun g (c, _) b = (c, b)
         in lens f g
         end
-      fun p1 () = PC.first
-      fun p2 () = PC.second
+      fun p1 () = P.first
+      fun p2 () = P.second
+      fun matching sca cbt = P.dimap sca cbt o P.second
       fun lensC2P (Concrete.lens{view=v,update=u}) =
           let
             fun dup a = (a, a)
           in
-            PC.dimap dup u o PC.first o PCM.lmap v
+            P.dimap dup u o P.first o PM.lmap v
           end
       end
     end
-  end
-  end
 
 
 end

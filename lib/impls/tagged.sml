@@ -5,19 +5,19 @@ structure Tagged = struct
   fun unTagged (b : ('a, 'b) tagged) : 'b = b
 
   structure Profunctor : PROFUNCTOR = struct
-    type ('a, 'b) m = ('a, 'b) tagged
+    type ('a, 'b) a = ('a, 'b) tagged
     fun dimap f g b = tagged (g b)
   end
 
   structure Cocartesian : COCARTESIAN = struct
     open Profunctor
-    type ('a, 'b) m = ('a, 'b) tagged
+    type ('a, 'b) a = ('a, 'b) tagged
     fun left b = tagged (Base.left b)
     fun right b = tagged (Base.right b)
   end
   structure Monoidal : MONOIDAL = struct
     open Profunctor
-    type ('a, 'b) m = ('a, 'b) tagged
+    type ('a, 'b) a = ('a, 'b) tagged
     fun par b d = tagged (b, d)
     fun empty () = tagged ()
   end

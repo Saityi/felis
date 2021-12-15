@@ -3,12 +3,12 @@ functor Star (structure A : APPLICATIVE) = struct
     fun star (f : 'a -> 'b A.m) : ('a, 'b) star = f
     fun runStar (u : ('a, 'b) star) = u
     structure Profunctor : PROFUNCTOR = struct
-      type ('a, 'b) m = ('a, 'b) star
+      type ('a, 'b) a = ('a, 'b) star
       fun dimap f g (h : ('a, 'b) star) : ('s, 't) star = star (A.map g o h o f)
     end
 
     structure Cartesian : CARTESIAN = struct
-      type ('a, 'b) m = ('a, 'b) star
+      type ('a, 'b) a = ('a, 'b) star
       open Profunctor
 
       fun first (f : ('a, 'b) star) =
@@ -22,7 +22,7 @@ functor Star (structure A : APPLICATIVE) = struct
                         (f a))
     end
     structure Cocartesian : COCARTESIAN = struct
-      type ('a, 'b) m = ('a, 'b) star
+      type ('a, 'b) a = ('a, 'b) star
       open Profunctor
       fun right (f : ('a, 'b) star) =
         star (Base.either (A.map Base.left o A.pure) (A.map Base.right o f))
@@ -32,13 +32,14 @@ functor Star (structure A : APPLICATIVE) = struct
 
     structure Monoidal : MONOIDAL = struct
       open Profunctor
-      local structure AM = ApplicativeMethods(A)
-            structure AS = ApplicativeSyntax(A)
-            open AM AS Base
-            infix 4 <$>
-            infix 4 <*>
+      local
+        structure AM = ApplicativeMethods(A)
+        structure AS = ApplicativeSyntax(A)
+        open AM AS Base
+        infix 4 <$>
+        infix 4 <*>
       in
-        type ('a, 'b) m = ('a, 'b) star
+        type ('a, 'b) a = ('a, 'b) star
 
         fun empty () = star A.pure
 

@@ -24,7 +24,8 @@ structure FunctionInstances = struct
   end
 
   structure Profunctor : PROFUNCTOR = struct
-    type ('a, 'b) m = 'a -> 'b
+    type ('a, 'b) a = 'a -> 'b
+    open Arrow
     fun dimap f g h = g o h o f
   end
 

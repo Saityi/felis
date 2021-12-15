@@ -27,7 +27,8 @@ functor Kleisli (structure M : MONAD) = struct
       open Base
       infix 9 $
     in
-      type ('a, 'b) m = ('a -> ('b M.m))
+      open Arrow
+      type ('a, 'b) a = ('a -> ('b M.m))
       fun dimap f g h = liftM $ g o h o f
     end
   end

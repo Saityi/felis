@@ -1,6 +1,6 @@
 signature CARTESIAN = sig
   (* AKA Strong Profunctor *)
   include PROFUNCTOR
-  val first  : ('a, 'b) m -> (('a * 'c), ('b * 'c)) m
-  val second : ('a, 'b) m -> (('c * 'a), ('c * 'b)) m
+  val first  : ('a, 'b) a -> (('a * 'c), ('b * 'c)) a
+  val second : ('a, 'b) a -> (('c * 'a), ('c * 'b)) a
 end
