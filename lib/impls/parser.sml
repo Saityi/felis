@@ -1,3 +1,10 @@
+signature PARSER = sig
+  type 'a parser
+  type text
+  val runParser : 'a parser -> (text -> ('a * text) list)
+  val parse : 'a parser -> text -> ('a * text) list
+end
+
 structure Parser = struct
   local
     open Base
@@ -11,6 +18,7 @@ structure Parser = struct
     fun concatMap (f : 'a -> 'b list) (xs : 'a list) : 'b list =
       List.foldr (fn (x, acc) => acc @ f x) [] xs
   in
+  type text = string
   datatype 'a parser = parser of string -> ('a * string) list
   type 'a m = 'a parser
 
@@ -43,7 +51,7 @@ structure Parser = struct
                                     []      => []
                                   | (x::xs) => [x])
 end
-
+structure ParserParser : PARSER = Parser
 structure ParserMonad : MONAD = Parser
 structure ParserAlternative : ALTERNATIVE = Parser
 
@@ -52,14 +60,12 @@ structure ParserCombinators = struct
     open Base
     infix 9 $
     structure PM = MonadMethods(Parser)
-    structure PS = MonadSyntax(Parser)
     structure AM = AlternativeMethods(Parser)
-    structure AS = AlternativeSyntax(Parser)
     infixr 1 >>=
-    infix 6 <$> <*> <|>
+    infix 6 <$> <*> <|> $>
     fun cons x xs = x :: xs
   in
-    open Parser AM AS PM PS
+    open Parser AM PM
     val anyChar : char parser =
       let fun anyChar' s =
         case String.explode s of
@@ -83,5 +89,30 @@ structure ParserCombinators = struct
     fun manyP p =
       (pure (uncurry op ::) <*> p <*> manyP p) orElseP (pure [])
 
+    (* Parse as large of an int as possible from the head of a char stream *)
+    val intP =
+      let fun intP' s =
+        let val cx     = String.explode s
+            val digits = takeWhile Char.isDigit cx
+            val rest   = dropWhile Char.isDigit cx
+        in case Int.fromString (String.implode digits) of
+             SOME i => [(i, String.implode rest)]
+           | NONE   => []
+        end
+      in parser intP'
+      end
+
+    val nextDigit =
+      let fun digitP' s =
+        case String.explode s of
+          (c :: cx') =>
+            (case Int.fromString (Char.toString c) of
+              SOME i => [(i, String.implode cx')]
+             | NONE   => [])
+        | []      => []
+      in parser digitP'
+      end
+
+    fun digitP i = nextDigit >>= (fn i' => if i' = i then pure () else noParserP)
   end
 end

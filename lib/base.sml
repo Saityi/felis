@@ -5,6 +5,16 @@ structure Base = struct
                            | right of 'b
 
   type 'a id = 'a
+  fun takeWhile _ []        = []
+    | takeWhile p (x :: xs) =
+      if p x
+      then x :: takeWhile p xs
+      else []
+  fun dropWhile _ []        = []
+    | dropWhile p (x :: xs) =
+      if p x
+      then dropWhile p xs
+      else (x :: xs)
   fun either f _ (left x) = f x
     | either _ g (right y) = g y
   fun id x = x
