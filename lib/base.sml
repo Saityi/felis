@@ -15,6 +15,8 @@ structure Base = struct
       if p x
       then dropWhile p xs
       else (x :: xs)
+  fun concatMap f xs =
+      List.foldr (fn (x, acc) => acc @ f x) [] xs
   fun either f _ (left x) = f x
     | either _ g (right y) = g y
   fun id x = x

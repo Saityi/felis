@@ -15,10 +15,9 @@ structure Parser = struct
     open LM LS
     infix 1 >>=
     infix 6 <$> <*>
-    fun concatMap (f : 'a -> 'b list) (xs : 'a list) : 'b list =
-      List.foldr (fn (x, acc) => acc @ f x) [] xs
   in
   type text = string
+  (* TODO: Replace with different representation e.g. 'ParseResult' *)
   datatype 'a parser = parser of string -> ('a * string) list
   type 'a m = 'a parser
 
@@ -55,39 +54,92 @@ structure ParserParser : PARSER = Parser
 structure ParserMonad : MONAD = Parser
 structure ParserAlternative : ALTERNATIVE = Parser
 
+(* Via http://dev.stephendiehl.com/fun/parsers.html *)
 structure ParserCombinators = struct
   local
     open Base
     infix 9 $
     structure PM = MonadMethods(Parser)
     structure AM = AlternativeMethods(Parser)
-    infixr 1 >>=
-    infix 6 <$> <*> <|> $>
-    fun cons x xs = x :: xs
+    infix 1 >>=
+    infix 6 <$> <*> <|> $> >>
   in
     open Parser AM PM
-    val anyChar : char parser =
-      let fun anyChar' s =
+    val fail = parser (fn _ => [])
+    val nextChar : char parser =
+      let fun nextChar' s =
         case String.explode s of
           [] => []
         | (c::rest) => [(c, String.implode rest)]
-      in parser anyChar'
+      in parser nextChar'
       end
-    val noParserP = parser (fn _ => [])
-    fun charP c =
-      anyChar >>= (fn c' =>
-        if c = c'
-        then pure ()
-        else noParserP)
-    infix 6 orElseP
-    fun p1 orElseP p2 =
-      let fun orElseP' s = case parse p1 s of
-                             [] => parse p2 s
-                           | xs => xs
+
+    fun satisfy p =
+      let fun test c =
+            if p c
+            then pure c
+            else fail
+      in nextChar >>= test
+      end
+
+    fun char c =
+      satisfy (fn c' => c = c')
+
+    fun orElseP p1 p2 =
+      let fun orElseP' s =
+            case parse p1 s of
+              [] => parse p2 s
+            | xs => xs
       in parser orElseP'
       end
-    fun manyP p =
-      (pure (uncurry op ::) <*> p <*> manyP p) orElseP (pure [])
+
+    fun many p =
+      let val q = pure []
+          val manyv =
+            (p       >>= (fn pv =>
+            (many p) >>= (fn pvs =>
+            (pure (pv :: pvs)))))
+      in manyv <|> q
+      end
+
+    fun some p =
+      many p >>= (fn pvs =>
+        case pvs of
+          [] => fail
+        | xs => pure xs)
+
+    fun oneOf cs =
+      satisfy (fn c => List.exists (fn c' => c' = c) cs)
+
+    fun chainl1 p chain =
+      let fun rest a =
+        let val p1 =
+              chain >>= (fn f =>
+              p     >>= (fn b =>
+              rest (f a b)))
+            val p2 = pure a
+        in p1 <|> p2
+        end
+      in p >>= rest
+      end
+
+    fun chainl p chain a =
+      chainl1 p chain <|> pure a
+
+    val spaces =
+      many (oneOf [#"\n", #"\r", #" "])
+
+    fun string' []        = pure []
+      | string' (c :: cs) = char c >> string' cs >> (pure (c :: cs))
+
+    fun token p =
+      p >>= (fn a => spaces >> pure a)
+
+    val digit =
+      satisfy Char.isDigit
+
+    fun string s =
+      String.implode <$> string' (String.explode s)
 
     (* Parse as large of an int as possible from the head of a char stream *)
     val intP =
@@ -113,6 +165,21 @@ structure ParserCombinators = struct
       in parser digitP'
       end
 
-    fun digitP i = nextDigit >>= (fn i' => if i' = i then pure () else noParserP)
+    fun digitP i =
+      let fun test i' =
+            if i' = i
+            then pure ()
+            else fail
+      in nextDigit >>= test
+      end
+
+    fun reserved s =
+      token (string s)
+
+    fun parens m =
+      reserved "(" >>
+      m >>= (fn n =>
+      reserved ")" >>
+      pure n)
   end
 end
