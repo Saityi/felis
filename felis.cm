@@ -46,6 +46,7 @@ Group is
     lib/impls/forget.sml
     lib/impls/star.sml
     lib/impls/tagged.sml
+    lib/impls/parser.sml
     lib/impls/optics.sml
 
     lib/infix/alternative.sml

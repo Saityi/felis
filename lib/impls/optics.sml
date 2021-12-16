@@ -1,3 +1,8 @@
+signature OPTIC = sig
+  structure P : PROFUNCTOR
+  type ('s, 't, 'a, 'b) optic
+end
+
 (* Via https://github.com/hablapps/DontFearTheProfunctorOptics/blob/master/Optics.md *)
 structure Optics = struct
   structure Concrete = struct
@@ -21,6 +26,9 @@ structure Optics = struct
         - from (shift ()) ((1,2),3);
         (1,(2,3))
       *)
+      fun compose l1 l2 = lens { view = (view l2) o (view l1)
+                               , update = (update l1) o (update l2)
+                               }
       fun p1 () =
         let fun fst (a, b) = a
             fun u (b,(_,c)) = (b, c)
@@ -81,7 +89,7 @@ structure Optics = struct
 
   (* Via https://github.com/solomon-b/profunctor-optics/blob/master/src/Data/Optics.hs*)
   (* https://r6research.livejournal.com/27476.html *)
-  functor Adapter (structure P : PROFUNCTOR) = struct
+  functor Adapter (structure P : PROFUNCTOR) : OPTIC = struct
     local
       open Base
       structure T  = Tagged
@@ -89,7 +97,9 @@ structure Optics = struct
       structure C  = Constant
       infix 0 $
     in
+      structure P = P
       type ('s, 't, 'a, 'b) adapter = ('a, 'b) P.a -> ('s, 't) P.a
+      type ('s, 't, 'a, 'b) optic = ('s, 't, 'a, 'b) adapter
       fun adapter (f : 's -> 'a) (g : 'b -> 't) : ('s, 't, 'a, 'b) adapter =
         P.dimap f g
       fun from adapt s =
